@@ -70,14 +70,14 @@
 }
 
 /**
- Called by UIKit when the device starts to rotate to a new orientation.  This fires the \c setOrientation
- method on the Orientation object in JavaScript.  Look at the JavaScript documentation for more information.
+ Called by UIKit when the device starts to rotate to a new orientation.  This fires the \c setOrientation and the 
+ \c triggerOrientationChanging method on the Orientation object in JavaScript.  Look at the JavaScript documentation 
+ for more information.
  */
-- (void)didRotateFromInterfaceOrientation: (UIInterfaceOrientation)fromInterfaceOrientation
-{
+- (void)willRotateToInterfaceOrientation: (UIInterfaceOrientation)toInterfaceOrientation duration: (NSTimeInterval)duration {
 	int i = 0;
 	
-	switch (self.interfaceOrientation){
+	switch (toInterfaceOrientation){
 		case UIInterfaceOrientationPortrait:
 			i = 0;
 			break;
@@ -92,9 +92,17 @@
 			break;
 	}
 	
-	NSString* jsCallback = [NSString stringWithFormat:@"window.__defineGetter__('orientation',function(){ return %d; }); PhoneGap.fireEvent('orientationchange', window);",i];
+	NSString* jsCallback = [NSString stringWithFormat:@"window.__defineGetter__('orientation',function(){ return %d; }); PhoneGap.fireEvent('orientationchanging', window);",i];
 	[webView stringByEvaluatingJavaScriptFromString:jsCallback];
-	 
+}
+
+/**
+ Called by the UIKit whe the device has rotated to a new orientation. This fires the \c triggerOrientationChanged 
+ method on the Orientation object in Javascript.
+ */
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	NSString* jsCallback = @"PhoneGap.fireEvent('orientationchange', window);";
+	[webView stringByEvaluatingJavaScriptFromString:jsCallback];
 }
 
 - (void) setWebView:(UIWebView*) theWebView {
