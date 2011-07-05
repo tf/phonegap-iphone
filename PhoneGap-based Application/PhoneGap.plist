@@ -4,6 +4,8 @@
 <dict>
 	<key>EnableStatusBar</key>
 	<true/>
+	<key>StatusBarStyle</key>
+	<string>Default</string>
 	<key>DetectPhoneNumber</key>
 	<true/>
 	<key>TopActivityIndicator</key>

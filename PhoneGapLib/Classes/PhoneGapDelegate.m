@@ -234,12 +234,20 @@ static NSString *gapVersion;
     NSString *topActivityIndicator = [self.settings objectForKey:@"TopActivityIndicator"];
     NSString *enableViewportScale  = [self.settings objectForKey:@"EnableViewportScale"];
     NSString *enableStatusBar      = [self.settings objectForKey:@"EnableStatusBar"];
+	NSString *statusBarStyle       = [self.settings objectForKey:@"StatusBarStyle"];
 	
 	if(enableStatusBar && ![enableStatusBar boolValue]) {
 		[[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
 	} else {
 		// The first item in the supportedOrientations array is the start orientation (guaranteed to be at least Portrait)
 		[[UIApplication sharedApplication] setStatusBarOrientation:[[supportedOrientations objectAtIndex:0] intValue]];
+
+		if ([statusBarStyle isEqualToString:@"BlackTranslucent"]) {
+			[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:NO];
+		}
+		else if ([statusBarStyle isEqualToString:@"BlackOpaque"]) {
+			[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
+		}
 	}
 	
 	// Set the supported orientations for rotation. If number of items in the array is > 1, autorotate is supported
