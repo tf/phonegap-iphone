@@ -463,7 +463,8 @@ static NSString *gapVersion;
 	self.imageView.hidden = YES;
 	
 	[self.window bringSubviewToFront:self.viewController.view];
-	
+
+	[self.viewController willRotateToInterfaceOrientation:[[UIDevice currentDevice] orientation] duration:0];
 	[self.viewController didRotateFromInterfaceOrientation:[[UIDevice currentDevice] orientation]];
 }
 
