@@ -233,10 +233,22 @@ static NSString *gapVersion;
     NSNumber *enableLocation       = [self.settings objectForKey:@"EnableLocation"];
     NSString *topActivityIndicator = [self.settings objectForKey:@"TopActivityIndicator"];
     NSString *enableViewportScale  = [self.settings objectForKey:@"EnableViewportScale"];
+    NSString *enableStatusBar      = [self.settings objectForKey:@"EnableStatusBar"];
+	NSString *statusBarStyle       = [self.settings objectForKey:@"StatusBarStyle"];
 	
-	
-	// The first item in the supportedOrientations array is the start orientation (guaranteed to be at least Portrait)
-	[[UIApplication sharedApplication] setStatusBarOrientation:[[supportedOrientations objectAtIndex:0] intValue]];
+	if(enableStatusBar && ![enableStatusBar boolValue]) {
+		[[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+	} else {
+		// The first item in the supportedOrientations array is the start orientation (guaranteed to be at least Portrait)
+		[[UIApplication sharedApplication] setStatusBarOrientation:[[supportedOrientations objectAtIndex:0] intValue]];
+
+		if ([statusBarStyle isEqualToString:@"BlackTranslucent"]) {
+			[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+		}
+		else if ([statusBarStyle isEqualToString:@"BlackOpaque"]) {
+			[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
+		}
+	}
 	
 	// Set the supported orientations for rotation. If number of items in the array is > 1, autorotate is supported
     viewController.supportedOrientations = supportedOrientations;
@@ -323,6 +335,10 @@ static NSString *gapVersion;
 	UIImage* image = [UIImage imageNamed:[[self class] resolveImageResource:@"Default"]];
 	self.imageView = [[UIImageView alloc] initWithImage:image];
 	
+	// make background of imageview black
+	[self.imageView setBackgroundColor:[UIColor blackColor]];
+	[self.imageView setFrame:window.bounds];
+
     self.imageView.tag = 1;
 	[window addSubview:self.imageView];
 
