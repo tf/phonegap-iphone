@@ -243,10 +243,10 @@ static NSString *gapVersion;
 		[[UIApplication sharedApplication] setStatusBarOrientation:[[supportedOrientations objectAtIndex:0] intValue]];
 
 		if ([statusBarStyle isEqualToString:@"BlackTranslucent"]) {
-			[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:NO];
+			[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
 		}
 		else if ([statusBarStyle isEqualToString:@"BlackOpaque"]) {
-			[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
+			[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:YES];
 		}
 	}
 	
